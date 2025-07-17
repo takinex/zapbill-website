@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+  <title>Zapbill - Coming Soon - Android Billing App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #642ca1;
+      --gradient: linear-gradient(135deg, #642ca1, #a55eea);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--gradient);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      color: #e0d7f2;
+    }
+
+    .counter {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .time-box {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 20px 15px;
+      border-radius: 10px;
+      min-width: 70px;
+    }
+
+    .time-box span {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .time-box label {
+      font-size: 0.8rem;
+      color: #eee;
+      margin-top: 5px;
+    }
+
+    footer {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<img src="logo.png" alt="Logo" class="logo" style="width: 250px; height: auto;" />
+
+<h1>The Future of Billing is Almost Here!</h1>
+<p>Your smart, seamless Android billing companion is launching soon. Get ready to bill better, faster, and smarter!</p>
+
+  <div class="counter" id="countdown">
+    <div class="time-box">
+      <span id="days">--</span>
+      <label>Days</label>
+    </div>
+    <div class="time-box">
+      <span id="hours">--</span>
+      <label>Hours</label>
+    </div>
+    <div class="time-box">
+      <span id="minutes">--</span>
+      <label>Minutes</label>
+    </div>
+    <div class="time-box">
+      <span id="seconds">--</span>
+      <label>Seconds</label>
+    </div>
+  </div>
+
+  <footer>&copy; 2025 TAKINEX. All rights reserved.</footer>
+
+  <script>
+    const targetDate = new Date("2025-08-15T00:00:00").getTime(); // Update launch date
+
+    const countdown = () => {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerText = days;
+      document.getElementById("hours").innerText = hours;
+      document.getElementById("minutes").innerText = minutes;
+      document.getElementById("seconds").innerText = seconds;
+    };
+
+    setInterval(countdown, 1000);
+  </script>
+
+</body>
+</html>
