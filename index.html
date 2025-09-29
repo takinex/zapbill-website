@@ -1,126 +1,510 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zapbill — Fast, Simple Android Billing App</title>
+  <meta name="description" content="ZapBill is a modern billing app by TAKINEX. Create invoices in seconds, track sales, and print via Bluetooth, USB, or Wi‑Fi.">
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
-  <title>Zapbill - Coming Soon - Android Billing App</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primary: #642ca1;
-      --gradient: linear-gradient(135deg, #642ca1, #a55eea);
+    :root{
+      --brand:#642ca1; /* Primary */
+      --brand-600:#5a2694; /* slightly darker */
+      --brand-700:#4c1f7c; /* darker */
+      --ink:#0f1020;
+      --ink-2:#1c1d33;
+      --muted:#6b7280;
+      --bg:#0f0f14;
+      --card:#14141d;
+      --ring: rgba(100,44,161,.35);
+      --success:#16a34a;
+      --warning:#f59e0b;
+      --shadow: 0 10px 30px rgba(0,0,0,.35), 0 6px 16px rgba(0,0,0,.25);
+      --radius: 18px;
     }
-
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: var(--gradient);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
-      flex-direction: column;
-      padding: 20px;
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,Helvetica,sans-serif; background:linear-gradient(180deg, #0b0b11 0%, #0e0e15 30%, #10101a 100%); color:#e7e8ee;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
     }
+    a{color:inherit; text-decoration:none}
+    .container{width:min(1200px, 92vw); margin-inline:auto}
+    .btn{display:inline-flex; align-items:center; gap:.6rem; padding:.9rem 1.15rem; border-radius:999px; font-weight:600; letter-spacing:.2px; border:1px solid transparent; box-shadow:var(--shadow); transition:transform .15s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease}
+    .btn:focus-visible{outline:0; box-shadow:0 0 0 6px var(--ring)}
+    .btn-primary{background:linear-gradient(135deg, var(--brand), var(--brand-600));}
+    .btn-primary:hover{transform:translateY(-1px);}
+    .btn-ghost{background:transparent; border-color:#2b2c3b}
+    .btn-ghost:hover{background:#1a1b27}
 
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
+    /* Header */
+    header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(1.4) blur(10px); background:rgba(16,16,26,.56); border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
+    .brand{display:flex; align-items:center; gap:.8rem; font-weight:800; letter-spacing:.2px}
+    .logo{inline-size:38px; block-size:38px; border-radius:12px; background:conic-gradient(from 140deg at 50% 50%, #a78bfa, var(--brand), #8b5cf6, #22d3ee, var(--brand)); box-shadow:inset 0 0 0 2px rgba(255,255,255,.07), var(--shadow)}
+    nav a{opacity:.9; font-weight:600; margin-left:1.3rem}
+    nav a:hover{opacity:1}
+
+    /* Hero */
+    .hero{position:relative; padding:84px 0 72px;}
+    .grid-hero{display:grid; grid-template-columns: 1.2fr 1fr; gap:48px; align-items:center}
+    .kicker{display:inline-flex; align-items:center; gap:.5rem; background:rgba(100,44,161,.12); color:#d9c7f4; border:1px solid rgba(100,44,161,.35); padding:.35rem .7rem; border-radius:999px; font-weight:600; font-size:.85rem}
+    .title{font-size: clamp(2rem, 4.5vw, 3.2rem); line-height:1.05; font-weight:800; letter-spacing:-.02em; margin:14px 0}
+    .subtitle{font-size:clamp(1rem, 1.8vw, 1.1rem); color:#b5b8c9; max-width:56ch}
+    .hero-cta{margin-top:22px; display:flex; gap:12px; flex-wrap:wrap}
+
+    /* Mock cover */
+    .cover{
+	display: flex;
+  justify-content: center; /* center horizontally */
+  align-items: center;     /* center vertically */
+  height: 100%;            /* or set a fixed height if needed */
+  text-align: center;
+      position:relative; aspect-ratio: 4 / 3; border-radius: var(--radius); background: radial-gradient(1200px 500px at 10% 0%, rgba(100,44,161,.22), transparent),
+       radial-gradient(900px 400px at 90% 100%, rgba(139,92,246,.2), transparent), #11121a; border:1px solid rgba(255,255,255,.08); box-shadow:var(--shadow);
+      overflow:hidden;
     }
-
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 30px;
-      color: #e0d7f2;
+    .cover::after{content:""; position:absolute; inset:auto -20% -18% -20%; height:55%; background:linear-gradient(180deg, transparent, rgba(100,44,161,.35)); filter:blur(40px)}
+    .phone{
+      position:absolute; inset:auto 30px 30px auto; inline-size:min(330px, 34vw); aspect-ratio: 9 / 19.5; border-radius:34px; padding:12px; background:linear-gradient(180deg, #0a0b12, #181826); border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 30px 60px rgba(0,0,0,.55), inset 0 0 0 8px #0b0c14; display:grid; place-items:center;
     }
-
-    .counter {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      margin-bottom: 30px;
+    .screen{inline-size:100%; block-size:100%; border-radius:22px; background:
+      radial-gradient(600px 200px at 20% 20%, rgba(100,44,161,.25), transparent),
+      linear-gradient(180deg, #101222, #0d0e17);
+      border:1px solid rgba(255,255,255,.06); position:relative; overflow:hidden;
     }
+    .screen .chip{position:absolute; right:12px; top:12px; font-size:10px; padding:6px 10px; border-radius:999px; background:rgba(100,44,161,.3); border:1px solid rgba(100,44,161,.5)}
+    .screen .invoice{position:absolute; left:14px; right:14px; bottom:14px; top:52px; border-radius:14px; background:#0f111c; border:1px solid rgba(255,255,255,.06); padding:12px; display:flex; flex-direction:column; gap:10px}
+    .row{display:flex; justify-content:space-between; align-items:center; gap:8px}
+    .skel{inline-size:120px; block-size:10px; background:#1e2030; border-radius:999px}
+    .bar{inline-size:72px; block-size:10px; background:#1e2030; border-radius:999px}
+    .total{margin-top:auto; display:flex; justify-content:space-between; align-items:center; padding:10px; border-radius:12px; background:rgba(100,44,161,.12); border:1px dashed rgba(100,44,161,.35)}
 
-    .time-box {
-      background: rgba(255, 255, 255, 0.15);
-      padding: 20px 15px;
-      border-radius: 10px;
-      min-width: 70px;
+    /* Features */
+    section{padding:84px 0}
+    .section-title{font-size:clamp(1.6rem,3vw,2.2rem); font-weight:800; letter-spacing:-.01em; margin:0 0 18px}
+    .section-sub{color:#a9adc1; margin:0 0 28px}
+    .features{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    .card{background:var(--card); border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow)}
+    .card h3{margin:10px 0 8px; font-size:1.05rem}
+    .card p{margin:0; color:#b7bbcc}
+    .icon{inline-size:36px; block-size:36px; display:grid; place-items:center; border-radius:12px; background:rgba(100,44,161,.16); border:1px solid rgba(100,44,161,.32)}
+
+    /* FAQ */
+    .faq{display:grid; grid-template-columns:1fr; gap:12px}
+    details{background:var(--card); border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); padding:16px 18px; transition:background .2s ease}
+    details[open]{background:#191a27}
+    summary{list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:14px; font-weight:600}
+    summary::-webkit-details-marker{display:none}
+    .faq p{color:#b7bbcc}
+
+    /* Testimonials */
+    .testimonials{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    .quote{position:relative}
+    .quote::before{content:"\201C"; position:absolute; font-size:64px; line-height:0; top:8px; left:14px; color:rgba(255,255,255,.08)}
+    .stars{font-size:14px}
+    .avatar{inline-size:40px; block-size:40px; border-radius:50%; background:linear-gradient(135deg, var(--brand), #8b5cf6); display:inline-block}
+
+    /* Footer */
+    footer{padding:42px 0 64px; border-top:1px solid rgba(255,255,255,.06); background:#0f1018}
+    .foot-grid{display:grid; grid-template-columns:1.2fr .8fr .8fr 1fr; gap:18px}
+    .foot h4{margin:0 0 10px}
+    .legal a{opacity:.8}
+    .legal a:hover{opacity:1}
+
+    /* Utilities */
+    .pill{display:inline-flex; align-items:center; gap:.4rem; padding:.3rem .6rem; border-radius:999px; font-size:.8rem; font-weight:600; background:rgba(22,163,74,.16); border:1px solid rgba(22,163,74,.35); color:#b7f7c4}
+    .muted{color:#a9adc1}
+    .center{text-align:center}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .grid-hero{grid-template-columns:1fr; gap:28px}
+      .features{grid-template-columns:1fr 1fr}
+      .testimonials{grid-template-columns:1fr 1fr}
+      .foot-grid{grid-template-columns:1fr 1fr}
+      .phone{inset:auto 18px 18px auto}
     }
-
-    .time-box span {
-      display: block;
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-
-    .time-box label {
-      font-size: 0.8rem;
-      color: #eee;
-      margin-top: 5px;
-    }
-
-    footer {
-      font-size: 0.9rem;
-      color: #ccc;
+    @media (max-width: 640px){
+      nav{display:none}
+      .features, .testimonials{grid-template-columns:1fr}
+      .foot-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
-
-<img src="logo.png" alt="Logo" class="logo" style="width: 250px; height: auto;" />
-
-<h1>The Future of Billing is Almost Here!</h1>
-<p>Your smart, seamless Android billing companion is launching soon. Get ready to bill better, faster, and smarter!</p>
-
-  <div class="counter" id="countdown">
-    <div class="time-box">
-      <span id="days">--</span>
-      <label>Days</label>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+     <img src="logo.png" alt="Logo"  style="width: 220px; height: auto;" />
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#faq">FAQ</a>
+        <a href="#testimonials">Reviews</a>
+        <a href="#contact" class="btn btn-ghost" style="padding:.55rem .9rem">Contact</a>
+      </nav>
     </div>
-    <div class="time-box">
-      <span id="hours">--</span>
-      <label>Hours</label>
-    </div>
-    <div class="time-box">
-      <span id="minutes">--</span>
-      <label>Minutes</label>
-    </div>
-    <div class="time-box">
-      <span id="seconds">--</span>
-      <label>Seconds</label>
-    </div>
-  </div>
+  </header>
 
-  <footer>&copy; 2025 TAKINEX. All rights reserved.</footer>
+  <!-- Hero -->
+  <section class="hero container" aria-label="Hero">
+    <div class="grid-hero">
+      <div>
+        <span class="kicker">All-in-One Billing App</span>
+        <h1 class="title">Grow Your Business with Zapbill</h1>
+        <p class="subtitle"><strong>Zapbill</strong> helps shop owners and retailers manage billing, sales, and inventory effortlessly. With lightning-fast billing, tablet support, and secure cloud backup, <strong>Zapbill</strong> keeps your business running smoothly.</p>
+        <div class="hero-cta">
+          <a href="https://play.google.com/store/apps/details?id=com.takinex.zapbill" class="btn btn-primary" aria-label="Get ZapBill">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14m0 0l-6-6m6 6 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Download Now
+          </a>
+          <a href="https://www.youtube.com/watch?v=keMEmNS8MKo" class="btn btn-ghost" aria-label="Watch demo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 5v14l11-7-11-7z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Watch Demo
+          </a>
+          <span class="pill" title="Works offline">Offline</span>
+        </div>
+      </div>
+      <div class="cover" role="img" aria-label="ZapBill app mockup">
+        <img src="hero.png" alt="Logo"  style="width: auto; height: 400px;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="container" aria-label="Features">
+    <h2 class="section-title">Everything you need to bill faster</h2>
+    <p class="section-sub">Built for shops, services, and growing businesses. Configure once—bill forever.</p>
+
+    <div class="features">
+      <!-- Feature Card 1 -->
+      <article class="card">
+        <span class="icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M13 2L3 14h7l-1 8L21 8h-7l-0.5-6Z"
+        stroke="#d9c7f4"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        fill="none"/>
+</svg>
+
+        </span>
+        <h3>Quick Invoicing</h3>
+        <p>Create professional invoices in seconds with saved items & taxes.</p>
+      </article>
+
+      <!-- Feature Card 2 -->
+      <article class="card">
+        <span class="icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 7h16v10H4z" stroke="#d9c7f4" stroke-width="2"/><path d="M8 7V5a4 4 0 0 1 8 0v2" stroke="#d9c7f4" stroke-width="2"/></svg>
+        </span>
+        <h3>Secure & Private</h3>
+        <p>Your data stays on your device with encrypted local backups.</p>
+      </article>
+
+      <!-- Feature Card 3 -->
+      <article class="card">
+        <span class="icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="#d9c7f4" stroke-width="2" stroke-linecap="round"/></svg>
+        </span>
+        <h3>Inventory Management</h3>
+        <p>Track stock levels, categories, and product details to avoid shortages and overstock.</p>
+      </article>
+
+      <!-- Feature Card 4 -->
+      <article class="card">
+        <span class="icon" aria-hidden="true">
+         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Receipt outline -->
+  <path d="M6 2h12v20l-3-3-3 3-3-3-3 3V2z" stroke="#d9c7f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  
+  <!-- Lines on receipt -->
+  <line x1="8" y1="6" x2="16" y2="6" stroke="#d9c7f4" stroke-width="2" stroke-linecap="round"/>
+  <line x1="8" y1="10" x2="16" y2="10" stroke="#d9c7f4" stroke-width="2" stroke-linecap="round"/>
+  <line x1="8" y1="14" x2="16" y2="14" stroke="#d9c7f4" stroke-width="2" stroke-linecap="round"/>
+</svg>
+
+        </span>
+        <h3>Multi‑Printer</h3>
+        <p>Print via Bluetooth, USB, or Wi‑Fi/Network—thermal & A4.</p>
+      </article>
+
+      <!-- Feature Card 5 -->
+      <article class="card">
+        <span class="icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Scanner body -->
+  <rect x="4" y="7" width="16" height="10" rx="2" stroke="#d9c7f4" stroke-width="2" fill="none"/>
+  
+  <!-- Scan line -->
+  <line x1="4" y1="12" x2="20" y2="12" stroke="#d9c7f4" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Scanner corners -->
+  <path d="M4 7v-2h2" stroke="#d9c7f4" stroke-width="2" stroke-linecap="round"/>
+  <path d="M20 7v-2h-2" stroke="#d9c7f4" stroke-width="2" stroke-linecap="round"/>
+  <path d="M4 17v2h2" stroke="#d9c7f4" stroke-width="2" stroke-linecap="round"/>
+  <path d="M20 17v2h-2" stroke="#d9c7f4" stroke-width="2" stroke-linecap="round"/>
+</svg>
+
+        </span>
+        <h3>Barcode Scan</h3>
+        <p>Scan & add items instantly with camera or scanner devices.</p>
+      </article>
+
+      <!-- Feature Card 6 -->
+      <article class="card">
+        <span class="icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+ 
+  <circle cx="12" cy="12" r="10" stroke="#d9c7f4" stroke-width="2" fill="none"/>
+  
+  <line x1="6" y1="6" x2="18" y2="18" stroke="#d9c7f4" stroke-width="2" stroke-linecap="round"/>
+</svg>
+
+        </span>
+        <h3>Offline First</h3>
+        <p>Works even without internet—sync or share when you’re ready.</p>
+      </article>
+	  
+	  
+	   <article class="card">
+        <span class="icon" aria-hidden="true">
+       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Coin / Circle -->
+  <circle cx="12" cy="12" r="9" stroke="#d9c7f4" stroke-width="2" fill="none"/>
+  
+  <!-- Generic currency symbol -->
+  <path d="M12 7v10M9 10h6M9 14h6" stroke="#d9c7f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+        </span>
+        <h3>Expense Tracking</h3>
+        <p>Monitor business expenses to stay on top of your finances.</p>
+      </article>
+	  
+	   <article class="card">
+        <span class="icon" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 18h12M4 6h16v8H4z" stroke="#d9c7f4" stroke-width="2"/></svg>
+
+
+        </span>
+        <h3>Multi-Device Support</h3>
+        <p>Use Zapbill seamlessly on Android phones and tablets.</p>
+      </article>
+	  
+	   <article class="card">
+        <span class="icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Main star -->
+  <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14" 
+        stroke="#d9c7f4" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        fill="none"/>
+</svg>
+
+        </span>
+        <h3>Reports & Insights</h3>
+        <p>Get daily, weekly, and monthly sales reports to grow smarter.</p>
+      </article>
+	  
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="container" aria-label="FAQ">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <p class="section-sub">If you can’t find what you’re looking for, <a href="mailto:contact.zapbill@gmail.com" style="color:#d9c7f4">contact us</a>.</p>
+    <div class="faq">
+      <details>
+        <summary>
+          Does Zapbill support tax?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#bfc3d6" stroke-width="2" stroke-linecap="round"/></svg>
+        </summary>
+        <p>Yes, you can add taxes as inclusive or exclusive and specify the percentage.</p>
+      </details>
+      <details>
+        <summary>
+         How can I transfer data to a new device?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#bfc3d6" stroke-width="2" stroke-linecap="round"/></svg>
+        </summary>
+        <p>Backup your data to Google Drive, sign in on the new device with the same email, and restore your data.</p>
+      </details>
+      <details>
+        <summary>
+          Does the app work offline?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#bfc3d6" stroke-width="2" stroke-linecap="round"/></svg>
+        </summary>
+        <p>Yes, data is saved locally, so the app works without an internet connection.</p>
+      </details>
+      <details>
+        <summary>
+          Can I print invoices directly from the app?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#bfc3d6" stroke-width="2" stroke-linecap="round"/></svg>
+        </summary>
+        <p>Yes, connect a compatible Bluetooth or USB printer, then tap the Print icon on the invoice screen.</p>
+      </details>
+	  
+	   <details>
+        <summary>
+          What printer paper sizes are supported?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#bfc3d6" stroke-width="2" stroke-linecap="round"/></svg>
+        </summary>
+        <p>The app supports 58mm, 80mm, and A4-sized printer paper.</p>
+      </details>
+	  
+	   <details>
+        <summary>
+          Is a free trial available?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#bfc3d6" stroke-width="2" stroke-linecap="round"/></svg>
+        </summary>
+        <p>Yes, a 3-day free trial is available.</p>
+      </details>
+	  
+	   <details>
+        <summary>
+          Can I use the app for free?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#bfc3d6" stroke-width="2" stroke-linecap="round"/></svg>
+        </summary>
+        <p>Yes, the app can be used for free with some limitations.</p>
+      </details>
+	  
+	   <details>
+        <summary>
+          Is it secure to store my data?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#bfc3d6" stroke-width="2" stroke-linecap="round"/></svg>
+        </summary>
+        <p>Yes, all data is stored locally on your device, keeping it safe and private.</p>
+      </details>
+	  
+	   <details>
+        <summary>
+         Can I track inventory?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#bfc3d6" stroke-width="2" stroke-linecap="round"/></svg>
+        </summary>
+        <p>Yes, you can track inventory and receive low stock alerts.</p>
+      </details>
+	  
+	   <details>
+        <summary>
+          Is the app optimized for 10-inch tablets?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#bfc3d6" stroke-width="2" stroke-linecap="round"/></svg>
+        </summary>
+        <p>Yes, the app is fully optimized for 10-inch tablets.</p>
+      </details>
+	  
+	  <details>
+        <summary>
+          Is a physical barcode scanner supported?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#bfc3d6" stroke-width="2" stroke-linecap="round"/></svg>
+        </summary>
+        <p>Yes, you can pair a compatible scanner with the app and start scanning immediately.</p>
+      </details>
+	  
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="container" aria-label="Testimonials">
+    <h2 class="section-title center">Loved by growing businesses</h2>
+    <p class="section-sub center">Retailers, cafés, salons, service pros, and more trust Zapbill.</p>
+    <div class="testimonials">
+      <article class="card quote">
+        <div class="stars" aria-label="5 stars">★★★★★</div>
+        <p>“Zapbill has completely streamlined my billing process. Creating invoices is quick and printing works flawlessly!”</p>
+        <div style="display:flex; align-items:center; gap:.6rem; margin-top:12px">
+          <span class="avatar" aria-hidden="true"></span>
+          <div>
+            <strong>John D.</strong>
+            <div class="muted">Retail Owner</div>
+          </div>
+        </div>
+      </article>
+      <article class="card quote">
+        <div class="stars" aria-label="5 stars">★★★★★</div>
+        <p>“I love that it works offline. Even without internet, I can manage my sales and track inventory easily.”</p>
+        <div style="display:flex; align-items:center; gap:.6rem; margin-top:12px">
+          <span class="avatar" aria-hidden="true"></span>
+          <div>
+            <strong>Pooja Nair</strong>
+            <div class="muted">Salon & Spa</div>
+          </div>
+        </div>
+      </article>
+      <article class="card quote">
+        <div class="stars" aria-label="5 stars">★★★★★</div>
+        <p>“The app is very user-friendly and optimized for my 10-inch tablet. Backup and data transfer to a new device was seamless.”</p>
+        <div style="display:flex; align-items:center; gap:.6rem; margin-top:12px">
+          <span class="avatar" aria-hidden="true"></span>
+          <div>
+            <strong>Ahmed R</strong>
+            <div class="muted">Service Professional</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact" aria-label="Footer">
+    <div class="container foot-grid">
+      <div class="foot">
+       <img src="logo.png" alt="Logo"  style="width: 170px; height: auto;" />
+        <p class="muted">Upgrade to Zapbill Pro for advanced features and unlimited invoicing!</p>
+        <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
+          <a href="https://play.google.com/store/apps/details?id=com.takinex.zapbill" class="btn btn-primary" aria-label="Download ZapBill">Download</a>
+          <a href="mailto:contact.zapbill@gmail.com" class="btn btn-ghost" aria-label="Email Takinex">Email Us</a>
+        </div>
+      </div>
+      <div class="foot">
+        <h4>Quick Links</h4>
+        <ul class="legal" style="padding-left:0; list-style:none; display:grid; gap:8px">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+        </ul>
+      </div>
+      <div class="foot">
+        <h4>Contact</h4>
+        <ul class="legal" style="padding-left:0; list-style:none; display:grid; gap:8px">
+          <li><a href="mailto:contact.zapbill@gmail.com">contact.zapbill@gmail.com</a></li>
+        
+        </ul>
+      </div>
+      <div class="foot">
+        <h4>Legal</h4>
+        <ul class="legal" style="padding-left:0; list-style:none; display:grid; gap:8px">
+          <li><a href="https://zapbill.takinex.com/privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="https://zapbill.takinex.com/terms-of-service.html">Terms of Service</a></li>
+        
+        </ul>
+      </div>
+    </div>
+    <div class="container" style="margin-top:28px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap">
+      <small class="muted">© <span id="year"></span> TAKINEX. All rights reserved.</small>
+      <small class="muted">Fast • Secure • Easy Billing</small>
+    </div>
+  </footer>
 
   <script>
-    const targetDate = new Date("2025-10-01T00:00:00").getTime(); // Update launch date
+    // Set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-    const countdown = () => {
-      const now = new Date().getTime();
-      const diff = targetDate - now;
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      document.getElementById("days").innerText = days;
-      document.getElementById("hours").innerText = hours;
-      document.getElementById("minutes").innerText = minutes;
-      document.getElementById("seconds").innerText = seconds;
-    };
-
-    setInterval(countdown, 1000);
+    // Smooth anchor scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id=a.getAttribute('href').slice(1);
+        const el=document.getElementById(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+      })
+    })
   </script>
-
 </body>
 </html>
-
-
