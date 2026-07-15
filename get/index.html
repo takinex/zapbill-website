@@ -104,6 +104,35 @@
       box-shadow: 0 20px 60px var(--primary-glow);
     }
 
+    /* ---------- CONTACT CTA ---------- */
+.contact-section {
+  margin-top: 28px;
+}
+
+.contact-text {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.contact-btn {
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 12px;
+  background: transparent;
+  border: 2px solid var(--primary);
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.contact-btn:hover {
+  background: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px var(--primary-glow);
+}
+
     /* ---------- Animations ---------- */
     @keyframes shimmer {
       0% { background-position: 0% center; }
@@ -163,6 +192,18 @@
           src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
           alt="Get it on Google Play">
       </a>
+
+      <div class="contact-section">
+  <p class="contact-text">
+    Need customization or have any questions?
+  </p>
+
+  <a class="contact-btn"
+     href="mailto:contact.zapbill@gmail.com?subject=Zapbill%20Customization%20Inquiry">
+    📧 Contact Us
+  </a>
+</div>
+      
     </div>
   </section>
 
