@@ -32,17 +32,17 @@
         ),
         linear-gradient(135deg, #0c0916, var(--bg-dark));
       color: var(--white);
-      
+      overflow-x:hidden;
     }
 
     /* ---------- HERO ---------- */
     .hero {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 0 24px;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:60px 24px;
     }
 
     .content {
@@ -122,7 +122,7 @@
 }
 
 .contact-form{
-    display:none;
+    display:block;
     margin-top:30px;
     text-align:left;
     background:rgba(255,255,255,.06);
@@ -203,38 +203,6 @@
       'currency': 'INR'
   });
 </script>
-
-
-  <script>
-
-
-
-document.getElementById("contactForm").addEventListener("submit",function(e){
-
-    e.preventDefault();
-
-    const business=document.getElementById("business").value;
-    const country=document.getElementById("country").value;
-    const message=document.getElementById("message").value;
-
-    const subject=encodeURIComponent("Zapbill Customization Inquiry");
-
-    const body=encodeURIComponent(
-`Business Name: ${business}
-
-Country: ${country}
-
-Message:
-${message}`
-    );
-
-    window.location.href=
-`mailto:contact.zapbill@gmail.com?subject=${subject}&body=${body}`;
-
-});
-
-</script>
-
 </head>
 <body>
 
@@ -305,6 +273,36 @@ ${message}`
     </div>
   </section>
 
+<script>
+
+
+
+document.getElementById("contactForm").addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    const business=document.getElementById("business").value;
+    const country=document.getElementById("country").value;
+    const message=document.getElementById("message").value;
+
+    const subject=encodeURIComponent("Zapbill Customization Inquiry");
+
+    const body=encodeURIComponent(
+`Business Name: ${business}
+
+Country: ${country}
+
+Message:
+${message}`
+    );
+
+    window.location.href=
+`mailto:contact.zapbill@gmail.com?subject=${subject}&body=${body}`;
+
+});
+
+</script>
+  
 </body>
 </html>
 
