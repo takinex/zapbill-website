@@ -32,7 +32,7 @@
         ),
         linear-gradient(135deg, #0c0916, var(--bg-dark));
       color: var(--white);
-      overflow: hidden;
+      
     }
 
     /* ---------- HERO ---------- */
@@ -207,13 +207,7 @@
 
   <script>
 
-document.getElementById("showFormBtn").onclick=function(){
 
-    const form=document.getElementById("contactFormContainer");
-
-    form.style.display=
-        form.style.display==="block" ? "none" : "block";
-};
 
 document.getElementById("contactForm").addEventListener("submit",function(e){
 
@@ -274,11 +268,8 @@ ${message}`
 
      <div style="margin-top:30px;">
 
-    <button id="showFormBtn" class="custom-btn">
-        Need Customization?
-    </button>
 
-    <div id="contactFormContainer" class="contact-form">
+    <div  class="contact-form">
 
         <h3>Request a Free Consultation</h3>
 
