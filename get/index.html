@@ -241,30 +241,35 @@
 
         <h3>Need customization or have any questions?</h3>
 
-        <form id="contactForm">
+        <form id="contactForm"
+      action="https://docs.google.com/forms/d/e/1FAIpQLScuT6qmMZB1jvM4wHPw4Vez6pHiQszINCtpf9mFzP0ajOIgcw/formResponse"
+      method="POST"
+      target="hidden_iframe">
 
-            <input
-                type="text"
-                id="business"
-                placeholder="Business Name"
-                required>
+    <input
+        type="text"
+        name="entry.1627605324"
+        placeholder="Business Name"
+        required>
 
-            <input
-                type="text"
-                id="country"
-                placeholder="Country"
-                required>
+    <input
+        type="text"
+        name="entry.892204940"
+        placeholder="Country"
+        required>
 
-            <textarea
-                id="message"
-                placeholder="Tell us about your requirements..."
-                required></textarea>
+    <textarea
+        name="entry.894461247"
+        placeholder="Tell us about your requirements..."
+        required></textarea>
 
-            <button type="submit" class="submit-btn">
-                Submit Request
-            </button>
+    <button type="submit" class="submit-btn">
+        Submit Request
+    </button>
 
-        </form>
+</form>
+
+<iframe name="hidden_iframe" style="display:none;"></iframe>
 
     </div>
 
@@ -277,27 +282,15 @@
 
 
 
-document.getElementById("contactForm").addEventListener("submit",function(e){
+const form = document.getElementById("contactForm");
 
-    e.preventDefault();
+form.addEventListener("submit", function () {
 
-    const business=document.getElementById("business").value;
-    const country=document.getElementById("country").value;
-    const message=document.getElementById("message").value;
-
-    const subject=encodeURIComponent("Zapbill Customization Inquiry");
-
-    const body=encodeURIComponent(
-`Business Name: ${business}
-
-Country: ${country}
-
-Message:
-${message}`
-    );
-
-    window.location.href=
-`mailto:contact.zapbill@gmail.com?subject=${subject}&body=${body}`;
+   
+    setTimeout(() => {
+        alert("Thank you! Your request has been submitted.");
+        form.reset();
+    }, 1000);
 
 });
 
